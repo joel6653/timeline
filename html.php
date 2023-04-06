@@ -25,7 +25,7 @@ if ($full) { // the following is part of the user interface, as needed
 
 <body class='bg-body-secondary container h-100 pt-5'>
 
-    <nav class="bg-body-secondary fixed-top navbar navbar-expand-sm">
+    <nav class="fixed-top navbar navbar-expand-sm">
         <div class="container">
             <a href="#" class="navbar-brand" id="page_title"></a>
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#whole_menu" aria-controls="whole_menu">
@@ -72,6 +72,7 @@ if ($full) { // the following is part of the user interface, as needed
                                     <input class="ms-1 me-3" type="color" id="color_picker" value="#88dd88" oninput="table.transform();">
                                 </div>
                             </li>
+                            <li><a href="#" class="dropdown-item" onclick="menu.toggle(event.target);" data-menu="theme" data-checked="false" data-item="theme" data-label="Light mode">Dark mode</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><h6 class="dropdown-header">Dimensions</h6></li>
                             <li><a href="#" class="dropdown-item" onclick="menu.toggle(event.target);" data-menu="options" data-checked="false" data-item="expand" data-label="Collapse rows">Expand rows</a></li>
@@ -101,6 +102,8 @@ echo "<script src='script.js'></script>";
 echo "<script>";
 if (!$full) {
     echo "memory.fullUI = false;";
+    echo "document.body.classList.remove('bg-body-secondary');";
+    echo "document.body.classList.add('bg-transparent');";
 }
 echo "timeline.load();";
 echo "</script>";
