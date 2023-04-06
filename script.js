@@ -19,6 +19,7 @@ const io = {
                     memory.data(JSON.stringify(j.data));
                     memory.options = j.options;
                     memory.sortable = j.sortable;
+                    memory.theme(j.theme);
                     memory.title(j.title); // override the default one assigned in the previous statement
                     // todo decode j.options and use them
                     table.init(memory.data());
@@ -35,6 +36,7 @@ const io = {
             .then(data => {
                 memory.options = data.options;
                 memory.sortable = data.sortable;
+                memory.theme(data.theme);
                 menu.title(data.title);
                 table.init(JSON.stringify(data.data));
             });
@@ -44,7 +46,14 @@ const io = {
             memory.options = menu.options();
             memory.sortable = menu.sortable();
         }
-        const json_string = "{\"data\": " + memory.data() + ", \"title\": \"" + memory.title() + "\", \"options\": " + JSON.stringify(memory.options) + ", \"sortable\": \"" + memory.sortable + "}";
+        const json_string = 
+            "{\"data\": " + memory.data() + 
+            ", \"title\": \"" + memory.title() + 
+            "\", \"options\": " + JSON.stringify(memory.options) + 
+            ", \"rows\": " + JSON.stringify(menu.selected_rows()) +
+            ", \"sortable\": " + memory.sortable + 
+            ", \"theme\": \"" + memory.theme() +
+            "\"}";
         const blob = new Blob([json_string], {type: "text/json" });
         target.href = window.URL.createObjectURL(blob);
     }
@@ -65,6 +74,14 @@ const memory = {
         else {
             this.title(this.default_title);
             localStorage.setItem("data", data);
+        }
+    },
+    theme(theme) {
+        if (theme === undefined) {
+            return document.documentElement.getAttribute("data-bs-theme");
+        }
+        else {
+            document.documentElement.setAttribute("data-bs-theme", theme);
         }
     },
     title(title) {
@@ -184,6 +201,10 @@ const menu = {
     toggle(menu_item) {
         menu_item.innerText = [menu_item.dataset.label, menu_item.dataset.label = menu_item.innerText][0]; // swap data-label with innerText
         menu_item.dataset.checked = menu_item.dataset.checked === "false"; // set true to false and false to true
+        if (menu_item.dataset.item === "theme") {
+            memory.theme(menu_item.dataset.checked === "true" ? "dark" : "light");
+            timeline.x_axis(document.querySelector(".offcanvas-body header"));
+        }
         table.transform(); // make a new timeline with these changed settings in mind
     },
     view(state) {
@@ -222,6 +243,7 @@ const table = {
         this.master = this.convert(JSON.parse(data));
         if (memory.fullUI) {
             menu.add_rows();
+            menu.reset();
             menu.show();
         }
         this.transform();
@@ -243,6 +265,7 @@ const table = {
             memory.sortable = menu.sortable();
         }
         this.sort(memory.sortable);
+        // document.documentElement.setAttribute("data-bs-theme")
         timeline.draw(this.copy);
     },
     zoom() {
@@ -284,7 +307,6 @@ const table = {
 
 const timeline = {
     chart: undefined,
-    color: document.documentElement.getAttribute("data-bs-theme") === "dark" ? "#ffffff" : "#000000",
     element: document.getElementById("timeline"),
     selectable: true,
     zoomable: true,
@@ -295,7 +317,7 @@ const timeline = {
     init() {
         if (memory.fullUI) {initialize_help();} 
         this.chart = new google.visualization.Timeline(this.element);
-        this.x_axis();
+        this.when_ready();
         if (memory.fullUI) {
             document.getElementById("whole_menu").classList.remove("invisible");
             google.visualization.events.addListener(this.chart, "select", function() {
@@ -322,14 +344,18 @@ const timeline = {
         });
         this.chart.draw(data, memory.options);
     },
-    x_axis(chart = this.chart, container = this.element) {
+    when_ready(chart = this.chart, container = this.element) {
         // correct x-axis text colors on transform, in case dark mode is set at top level
         google.visualization.events.addListener(chart, 'ready', function () {
-            container.querySelectorAll("text").forEach(element => {
-                if (element.getAttribute('text-anchor') === 'middle') {
-                    element.setAttribute('fill', this.color);
-                }
-            });
+            timeline.x_axis(container);
+        });
+    },
+    x_axis(container) {
+        var color = memory.theme() === "dark" ? "#ffffff" : "#000000";
+        container.querySelectorAll("text").forEach(element => {
+            if (element.getAttribute('text-anchor') === 'middle') {
+                element.setAttribute('fill', color);
+            }
         });
     }
 }
