@@ -32,8 +32,8 @@
                     <li>Save or Export your spreadsheet as a CSV (Comma-separated values) file. <a href="#" onclick="document.getElementById('csv').click();">Upload it.</a></li>
                 </ul>
             </dd>
-            <!-- <dt class="col-sm-3">More examples</dt>
-            <dd class="col-sm-9">See more Time Line <a href="examples.html" target="_blank">examples</a>.</dd> -->
+            <dt class="col-sm-3">More examples</dt>
+            <dd class="col-sm-9">See more Time Line <a href="examples" target="_blank">examples</a>.</dd>
             <dt class="col-sm-3">What can go wrong?</dt>
             <dd class="col-sm-9">There is minimal error checking. Some things that can cause errors:
                 <ul>
@@ -83,7 +83,7 @@
         const data = table.convert(input);
 
         const chart = new google.visualization.Timeline(document.querySelector(".offcanvas-body header"));
-        timeline.x_axis(chart, document.querySelector(".offcanvas-body header"));
+        timeline.when_ready(chart, document.querySelector(".offcanvas-body header"));
         chart.draw(data, {enableInteractivity: false});
     }
 </script>
