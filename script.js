@@ -199,13 +199,19 @@ const menu = {
         this.custom_title.value = title;
     },
     toggle(menu_item) {
-        menu_item.innerText = [menu_item.dataset.label, menu_item.dataset.label = menu_item.innerText][0]; // swap data-label with innerText
-        menu_item.dataset.checked = menu_item.dataset.checked === "false"; // set true to false and false to true
-        if (menu_item.dataset.item === "theme") {
-            memory.theme(menu_item.dataset.checked === "true" ? "dark" : "light");
+        if (menu_item.dataset.menu === "theme") {
+            memory.theme(menu_item.dataset.item);
+            document.querySelectorAll("[data-menu='theme']").forEach(element => {
+                element.classList.toggle("d-none");
+            });
             timeline.x_axis(document.querySelector(".offcanvas-body header"));
+            timeline.x_axis(timeline.element);
         }
-        table.transform(); // make a new timeline with these changed settings in mind
+        else {
+            menu_item.innerText = [menu_item.dataset.label, menu_item.dataset.label = menu_item.innerText][0]; // swap data-label with innerText
+            menu_item.dataset.checked = menu_item.dataset.checked === "false"; // set true to false and false to true
+            table.transform(); // make a new timeline with these changed settings in mind
+        }
     },
     view(state) {
         const cl = this.view_menu.classList;

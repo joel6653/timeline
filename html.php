@@ -72,7 +72,6 @@ if ($full) { // the following is part of the user interface, as needed
                                     <input class="ms-1 me-3" type="color" id="color_picker" value="#88dd88" oninput="table.transform();">
                                 </div>
                             </li>
-                            <li><a href="#" class="dropdown-item" onclick="menu.toggle(event.target);" data-menu="theme" data-checked="false" data-item="theme" data-label="Light mode">Dark mode</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><h6 class="dropdown-header">Dimensions</h6></li>
                             <li><a href="#" class="dropdown-item" onclick="menu.toggle(event.target);" data-menu="options" data-checked="false" data-item="expand" data-label="Collapse rows">Expand rows</a></li>
@@ -82,6 +81,10 @@ if ($full) { // the following is part of the user interface, as needed
                             <li><hr class="dropdown-divider"></li>
                             <li><a href="#" class="dropdown-item" onclick="menu.reset();">Reset to defaults</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link d-none" onclick="menu.toggle(event.target);" data-menu="theme" data-item="light"><i class="bi bi-sun-fill me-1"></i>Light</a>
+                        <a href="#" class="nav-link" onclick="menu.toggle(event.target);" data-menu="theme" data-item="dark"><i class="bi bi-moon-stars-fill me-1"></i>Dark</a>
                     </li>
                     <li class="nav-item">
                         <a href="#help" class="nav-link" data-bs-toggle="offcanvas"><i class="bi bi-question-circle"></i></a>

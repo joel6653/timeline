@@ -1,5 +1,5 @@
 <?php
-// this php is like the main point-of-entry to the app, but merely decides what gets sent back to the browser
+// this php is the main point-of-entry to the app, but merely decides what gets sent back to the browser
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "GET": // render the full app, either in help mode or in show-a-timeline mode
         require("html.php");
@@ -12,7 +12,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;
 }
 
-function csv_to_json($file_name) { // called from this file (above), as well as from script.php and simple_script.php
+function csv_to_json($file_name) { // called from this file (above), as well as from several points in script.php
     $input = array_map("str_getcsv", file($file_name)); // convert csv input file to array
     $headings = array_shift($input); // temporarily remove headings in the first row
     foreach ($input as $key => $value) { // process all the other rows, one-by-one
