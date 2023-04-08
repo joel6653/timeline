@@ -156,7 +156,13 @@ const menu = {
                     Object.assign(option_object["timeline"], {colorByRowLabel: true});
                     break;
                 case "single":
-                    Object.assign(option_object["timeline"], {singleColor: this.color_picker.value});
+                    // Object.assign(option_object["timeline"], {singleColor: this.color_picker.value});
+                    let interactivity = true;
+                    option_object["colors"] = table.colors().map(element => {
+                        interactivity = interactivity ? !element : interactivity;
+                        return element ? "transparent" : this.color_picker.value;
+                    });
+                    option_object["enableInteractivity"] = interactivity;
                     break;
                 case "sort":
                     break;
@@ -227,6 +233,17 @@ const menu = {
 const table = {
     master: undefined,
     copy: undefined,
+    colors() {
+        const start_date_column = this.copy.getNumberOfColumns() - 2;
+        const end_date_column = start_date_column + 1;
+        const color_list = [];
+        for (let index = 0; index < this.copy.getNumberOfRows(); index++) {
+            var current_start = this.copy.getValue(index, start_date_column);
+            var current_end = this.copy.getValue(index, end_date_column);
+            color_list.push(current_start == current_end);            
+        }
+        return color_list;
+    },
     convert(input) {
         input.forEach(row => {
             var end = row.length - 1; // if 3 columns, end date is 3rd; if 4, end date is 4th (0-based)
