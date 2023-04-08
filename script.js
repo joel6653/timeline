@@ -55,6 +55,7 @@ const io = {
             ", \"theme\": \"" + memory.theme() +
             "\"}";
         const blob = new Blob([json_string], {type: "text/json" });
+        target.download = memory.title() + ".json";
         target.href = window.URL.createObjectURL(blob);
     }
 }

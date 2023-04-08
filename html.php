@@ -46,11 +46,11 @@ if ($full) { // the following is part of the user interface, as needed
                                 </form>
                             </li>
                             <li>
-                                <label for="json" class="dropdown-item">Import from JSON...</label>
+                                <label for="json" class="dropdown-item">Import view (.json)</label>
                                 <input type="file" accept=".json" class="d-none" id="json" onchange="document.getElementById('go_json').click();">
                                 <button type="submit" id="go_json" class="d-none" data-type="json" onclick="io.upload(event);">Import</button>
                             </li>
-                            <li><a href="#" class="dropdown-item disabled" onclick="io.download(event.target);" data-menu="file" data-item="save" download="timeline.json">Export as JSON...</a></li>
+                            <li><a href="#" class="dropdown-item disabled" onclick="io.download(event.target);" data-menu="file" data-item="save" download="timeline.json">Export view (.json)</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" id="view_menu">
