@@ -83,8 +83,8 @@ if ($full) { // the following is part of the user interface, as needed
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link d-none" onclick="menu.toggle(event.target);" data-menu="theme" data-item="light"><i class="bi bi-sun-fill me-1"></i>Light</a>
-                        <a href="#" class="nav-link" onclick="menu.toggle(event.target);" data-menu="theme" data-item="dark"><i class="bi bi-moon-stars-fill me-1"></i>Dark</a>
+                        <a href="#" class="nav-link d-none" onclick="menu.toggle(event.target.parentElement);" data-menu="theme" data-item="light"><i class="bi bi-sun-fill me-1"></i></a>
+                        <a href="#" class="nav-link" onclick="menu.toggle(event.target.parentElement);" data-menu="theme" data-item="dark"><i class="bi bi-moon-stars-fill me-1"></i></a>
                     </li>
                     <li class="nav-item">
                         <a href="#help" class="nav-link" data-bs-toggle="offcanvas"><i class="bi bi-question-circle"></i></a>
