@@ -356,7 +356,12 @@ const timeline = {
                     timeline.zoomable = !timeline.zoomable;
                 }
             });
-            if (memory.exists()) {table.init(memory.data());}
+            if (memory.exists()) {
+                table.init(memory.data());
+            }
+            else {
+                document.getElementById("help").classList.add("show");
+            }
         }
         else {
             io.url();
