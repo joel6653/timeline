@@ -81,6 +81,9 @@
         input.unshift(heading); // restore heading row
         
         const data = table.convert(input);
+        
+        // const c = new google.visualization.Table(document.querySelector("#example_table tbody"));
+        // c.draw(data);
 
         const chart = new google.visualization.Timeline(document.querySelector(".offcanvas-body header"));
         timeline.when_ready(chart, document.querySelector(".offcanvas-body header"));

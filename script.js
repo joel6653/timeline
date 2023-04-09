@@ -6,17 +6,17 @@ const io = {
                 fetch("index.php", {method: "POST", body: new FormData(document.getElementById("form_csv"))})
                     .then(response => {return response.json()})
                     .then(data => {
-                        memory.data(JSON.stringify(data));
+                        memory.data(data);
                         table.init(memory.data());
                     });
                 document.getElementById("csv").value = "";
                 break;
             case "json":
-                let file = document.getElementById("json").files[0];
-                let reader = new FileReader();
+                const file = document.getElementById("json").files[0];
+                const reader = new FileReader();
                 reader.addEventListener("load", (event) => {
                     const j = JSON.parse(event.target.result);
-                    memory.data(JSON.stringify(j.data));
+                    memory.data(j.data);
                     memory.options = j.options;
                     memory.sortable = j.sortable;
                     memory.theme(j.theme);
@@ -74,7 +74,7 @@ const memory = {
         }
         else {
             this.title(this.default_title);
-            localStorage.setItem("data", data);
+            localStorage.setItem("data", JSON.stringify(data));
         }
     },
     theme(theme) {
