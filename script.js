@@ -209,7 +209,7 @@ const menu = {
         if (menu_item.dataset.menu === "theme") {
             memory.theme(menu_item.dataset.item);
             document.querySelectorAll("[data-menu='theme']").forEach(element => {
-                element.classList.toggle("d-none");
+                element.classList.toggle("d-none"); // flip selection between only two choices, light and dark
             });
             timeline.x_axis(document.querySelector(".offcanvas-body header"));
             timeline.x_axis(timeline.element);
@@ -267,7 +267,7 @@ const table = {
         this.master = this.convert(JSON.parse(data));
         if (memory.fullUI) {
             menu.add_rows();
-            menu.reset();
+            menu.reset(); // duplicates table.transform below
             menu.show();
         }
         this.transform();
@@ -379,7 +379,7 @@ const timeline = {
             timeline.x_axis(container);
         });
     },
-    x_axis(container) {
+    x_axis(container) { // fix colors on timeline x-axis to contract with screen's background color (light or dark)
         var color = memory.theme() === "dark" ? "#ffffff" : "#000000";
         container.querySelectorAll("text").forEach(element => {
             if (element.getAttribute('text-anchor') === 'middle') {
